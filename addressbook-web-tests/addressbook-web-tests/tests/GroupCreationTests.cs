@@ -17,7 +17,7 @@ namespace WebAddressbookTests
             GroupData group = new GroupData("Begin");
             group.Header = "First";
             group.Footer = "Second";
-
+         
             app.Groups.Create(group);
             app.Auth.Logout();
         }

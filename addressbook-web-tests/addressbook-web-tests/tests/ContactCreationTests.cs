@@ -13,7 +13,6 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            
             app.Navigator.GoToContactPage();
             ContactData contact = new ContactData("Mariia");
             contact.Lastname = "Zhakova";
