@@ -21,25 +21,40 @@ namespace WebAddressbookTests
 
         public void OpenHomePage()
         {
-            driver.Navigate().GoToUrl(baseURL);
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
-
+            //driver.FindElement(By.Name("user")).Click();
+            //driver.FindElement(By.Name("user")).Clear();
+            driver.FindElement(By.LinkText("home")).Click();
         }
         public void GoToGroupsPage()
         {
+            if (driver.Url == baseURL + "/group.php"
+                && IsElementPresent(By.Name("new"))) 
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
         public void GoToContactPage()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+
+            if (driver.Url.Contains("edit.php?id=")
+                && IsElementPresent(By.Name("submit")))
+            {
+                return;
+            }
+            driver.FindElement(By.LinkText("home")).Click();
         }
 
 
         public void GoToHomePage()
         {
-            driver.FindElement(By.LinkText("home")).Click();
+            if (driver.Url == baseURL)
+            {
+                return;
+            }
+            driver.Navigate().GoToUrl(baseURL);
+
         }
     }
 }

@@ -26,11 +26,19 @@ namespace WebAddressbookTests
 
         public ContactHelper Create(ContactData contact)
         {
-            manager.Contacts.Create(contact);
+            manager.Navigator.GoToContactPage();
+            InitContactCreation();
             FillContactForm(contact);
             SubmitContactCreation();
             return this;
         }
+
+        public ContactHelper InitContactCreation()
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
+            return this;
+        }
+
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Firstname);
@@ -48,6 +56,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(ContactData newData)
         {
+            manager.Navigator.GoToContactPage();
             SelectContactForEdit();
             FillContactForm(newData);
             SubmitContactModification();
@@ -84,5 +93,6 @@ namespace WebAddressbookTests
 
             return this;
         }
+
     }
 }
