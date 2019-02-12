@@ -11,17 +11,11 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
+     
 
         public ContactHelper(ApplicationManager manager) 
             :base(manager)
         {
-        }
-      
-
-        public ContactHelper SubmitContactRemoval()
-        {
-            driver.FindElement(By.Name("delete")).Click();
-            return this;
         }
 
         public ContactHelper Create(ContactData contact)
@@ -31,6 +25,40 @@ namespace WebAddressbookTests
             FillContactForm(contact);
             SubmitContactCreation();
             return this;
+        }
+        public ContactHelper Modify(ContactData newData)
+        {
+            if(GetCountContact() == 0)
+            {
+                CreateNewTempContact();
+            }
+            manager.Navigator.GoToContactPage();
+            SelectContactForEdit();
+            FillContactForm(newData);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+
+            return this;
+        }
+        public ContactHelper Remove()
+        {
+            if (GetCountContact() == 0)
+            {
+                CreateNewTempContact();
+                manager.Navigator.GoToHomePage();
+            }
+            SelectContactForEdit();
+            SelectContactForDelete();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        private void CreateNewTempContact()
+        {
+            ContactData contact = new ContactData("Mariia");
+            contact.Lastname = "Zhakova";
+            contact.Notes = "For temp";
+            Create(contact);
         }
 
         public ContactHelper InitContactCreation()
@@ -54,26 +82,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData)
-        {
-            manager.Navigator.GoToContactPage();
-            SelectContactForEdit();
-            FillContactForm(newData);
-            SubmitContactModification();
-            manager.Navigator.GoToHomePage();
-
-            return this;
-        }
-
-        public ContactHelper Remove()
-        {
-            SelectContactForEdit();
-            SelectContactForDelete();
-            manager.Navigator.GoToHomePage();
-            return this;
-        }
-
-
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -92,6 +100,25 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//div[@id='content']/form[2]/input[2])")).Click();
 
             return this;
+        }
+        public ContactHelper SubmitContactRemoval()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+            return this;
+        }
+
+        //public int GetNumbersOfContact()
+        //{
+        //    String value = driver.FindElement(By.Id("search_count")).GetAttribute();
+        //    Console.Write(value);
+        //    int returnedValue = Int32.Parse(value);
+        //    return returnedValue;
+
+        //}
+
+        public int GetCountContact()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
         }
 
     }

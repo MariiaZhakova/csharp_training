@@ -46,7 +46,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("home")).Click();
         }
 
-
         public void GoToHomePage()
         {
             if (driver.Url == baseURL)

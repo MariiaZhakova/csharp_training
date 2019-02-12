@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
+﻿using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -15,21 +8,7 @@ namespace WebAddressbookTests
         public GroupHelper(ApplicationManager manager) 
             : base(manager)
         {
-        }
-
-        public GroupHelper Remove(int index)
-        {
-            SelectGroup(index);
-            SubmitGroupRemoval();
-            ReturnToGroupsPage();
-            return this;
-        }
-
-        public GroupHelper SubmitGroupRemoval()
-        {
-            driver.FindElement(By.Name("delete")).Click();
-            return this;
-        }
+        }    
 
         public GroupHelper Create(GroupData group)
         {
@@ -43,6 +22,10 @@ namespace WebAddressbookTests
 
         public GroupHelper Modify(int index, GroupData newData)
         {
+            if (GetCountGroup() == 0)
+            {
+                CreateNewTempGroup();
+            }
             manager.Navigator.GoToGroupsPage();
             SelectGroup(index); 
             InitGroupModification();
@@ -51,11 +34,35 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
+        public GroupHelper Remove(int index)
+        {
+            if (GetCountGroup() == 0)
+            {
+                CreateNewTempGroup();
+            }
+            SelectGroup(index);
+            SubmitGroupRemoval();
+            ReturnToGroupsPage();
+            return this;
+        }
+        private void CreateNewTempGroup()
+        {
+            GroupData group = new GroupData("Temp");
+            group.Header = "Group";
+            group.Footer = "For Modify";
+            Create(group);
+        }
+
 
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])["+ index +"]")).Click();
             return this;
+        }
+
+        public int GetCountGroup()
+        {
+            return driver.FindElements(By.ClassName("group")).Count;
         }
 
         public GroupHelper SubmitGroupModification()
@@ -76,9 +83,7 @@ namespace WebAddressbookTests
             Type(By.Name("group_header"), group.Header);
             Type(By.Name("group_footer"), group.Footer);
             return this;
-        }
-
-        
+        }  
 
         public GroupHelper ReturnToGroupsPage()
         {
@@ -95,6 +100,12 @@ namespace WebAddressbookTests
         public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
+            return this;
+        }
+
+        public GroupHelper SubmitGroupRemoval()
+        {
+            driver.FindElement(By.Name("delete")).Click();
             return this;
         }
     }
