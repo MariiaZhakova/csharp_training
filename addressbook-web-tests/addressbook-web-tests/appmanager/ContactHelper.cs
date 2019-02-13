@@ -11,8 +11,6 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-     
-
         public ContactHelper(ApplicationManager manager) 
             :base(manager)
         {
@@ -28,10 +26,6 @@ namespace WebAddressbookTests
         }
         public ContactHelper Modify(ContactData newData)
         {
-            if(GetCountContact() == 0)
-            {
-                CreateNewTempContact();
-            }
             manager.Navigator.GoToContactPage();
             SelectContactForEdit();
             FillContactForm(newData);
@@ -42,11 +36,6 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove()
         {
-            if (GetCountContact() == 0)
-            {
-                CreateNewTempContact();
-                manager.Navigator.GoToHomePage();
-            }
             SelectContactForEdit();
             SelectContactForDelete();
             manager.Navigator.GoToHomePage();
@@ -75,7 +64,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
@@ -87,8 +75,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-
- 
 
         public ContactHelper SelectContactForEdit()
         {
@@ -107,18 +93,19 @@ namespace WebAddressbookTests
             return this;
         }
 
-        //public int GetNumbersOfContact()
-        //{
-        //    String value = driver.FindElement(By.Id("search_count")).GetAttribute();
-        //    Console.Write(value);
-        //    int returnedValue = Int32.Parse(value);
-        //    return returnedValue;
-
-        //}
-
         public int GetCountContact()
         {
             return driver.FindElements(By.Name("entry")).Count;
+        }
+
+        public ContactHelper CheckIfContactIsPresent()
+        {
+            manager.Navigator.GoToContactPage();
+            if (GetCountContact() == 0)
+            {
+                CreateNewTempContact();
+            }
+            return this;
         }
 
     }

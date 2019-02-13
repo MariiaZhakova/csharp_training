@@ -17,6 +17,8 @@ namespace WebAddressbookTests
             ContactData newContactData = new ContactData("Dmitrii");
             newContactData.Lastname = "Zhakov";
             newContactData.Middlename = "Vladimirovich";
+
+            app.Contacts.CheckIfContactIsPresent();
             app.Contacts.Modify(newContactData);
         }
 

@@ -14,7 +14,7 @@ namespace WebAddressbookTests
 
         public void ContactRemovalTest()
         {
-            app.Navigator.GoToContactPage();
+            app.Contacts.CheckIfContactIsPresent();
             app.Contacts.Remove();
 
         }
