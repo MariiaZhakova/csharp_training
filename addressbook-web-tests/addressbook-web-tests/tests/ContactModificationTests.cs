@@ -19,7 +19,16 @@ namespace WebAddressbookTests
             newContactData.Middlename = "Vladimirovich";
 
             app.Contacts.CheckIfContactIsPresent();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.Modify(newContactData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Firstname = newContactData.Firstname;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
     }

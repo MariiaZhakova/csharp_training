@@ -6,7 +6,6 @@ namespace WebAddressbookTests
 {
     public class GroupHelper : HelperBase
     {
-
         public GroupHelper(ApplicationManager manager) 
             : base(manager)
         {
@@ -48,10 +47,9 @@ namespace WebAddressbookTests
             Create(group);
         }
 
-
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])["+ index +"]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])["+ (index+1) +"]")).Click();
             return this;
         }
 
