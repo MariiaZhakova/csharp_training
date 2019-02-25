@@ -39,7 +39,7 @@ namespace WebAddressbookTests
             {
                 if (contact.Id == oldData.Id)
                 {
-                    Assert.AreEqual(newContactData, contact);
+                    Assert.IsTrue((contact.Firstname == newContactData.Firstname)&&(contact.Lastname == newContactData.Lastname));
                 }
             }
         }
