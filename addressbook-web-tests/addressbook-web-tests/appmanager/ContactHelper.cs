@@ -28,12 +28,13 @@ namespace WebAddressbookTests
             string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
-            return new ContactData(firstName, lastName)
+            return new ContactData()
             {
+                Firstname = firstName,
+                Lastname = lastName,
                 Address = address,
                 AllEmails = allEmails,
-                AllPhones = allPhones
-                
+                AllPhones = allPhones      
             };
         }
 
@@ -52,8 +53,10 @@ namespace WebAddressbookTests
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
 
-            return new ContactData(firstName, lastName)
+            return new ContactData()
             {
+                Firstname = firstName,
+                Lastname = lastName,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,

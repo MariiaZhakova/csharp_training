@@ -9,24 +9,8 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string middlename = "";
-        private string nickname = "";
-        private string title = "";
-        private string company = "";
-        private string address = "";
-        private string home = "";
-        private string mobile = "";
-        private string work = "";
-        private string fax = "";
-        private string email = "";
-        private string email2 = "";
-        private string email3 = "";
-        private string homepage = "";
-        private string address2 = "";
-        private string phone2 = "";
-        private string notes = "";
-        private string allEmails = "";
-        private string allPhones = "";
+        private string allEmails;
+        private string allPhones;
 
         public ContactData(string firstname)
         {
@@ -38,6 +22,10 @@ namespace WebAddressbookTests
             Firstname = firstname;
             Lastname = lastname;
 
+        }
+
+        public ContactData()
+        {
         }
 
         public bool Equals(ContactData other)
@@ -93,7 +81,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Email + Email2 + Email3).Trim();
+                    return (CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
                 }
             }
             set
@@ -101,6 +89,7 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
+
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
@@ -130,7 +119,17 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n"; 
+
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
+        }
+
+        private string CleanUpEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email.Replace(" ", "") + "\r\n";
         }
 
         public string Fax { get; set; }
