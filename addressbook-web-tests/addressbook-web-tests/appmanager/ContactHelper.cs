@@ -66,7 +66,15 @@ namespace WebAddressbookTests
                 Email3 = email3
             };
         }
+        public string GetContactInformationFromDetailsForm(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContactForDetails(index);
 
+            return driver.FindElement(By.Id("content")).Text;
+
+        }
+        
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToContactPage();
@@ -135,6 +143,13 @@ namespace WebAddressbookTests
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
         
+        }
+        public void SelectContactForDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+               .FindElements(By.TagName("td"))[6]
+               .FindElement(By.TagName("a")).Click();
+
         }
         public ContactHelper SelectContactForDelete()
         {

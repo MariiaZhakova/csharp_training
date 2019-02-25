@@ -11,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allEmails;
         private string allPhones;
+        private string infoFromEditForm;
 
         public ContactData(string firstname)
         {
@@ -135,7 +136,138 @@ namespace WebAddressbookTests
             }
             return email.Replace(" ", "") + "\r\n";
         }
+        public string EditFormInToString
+        {
+            get
+            {
+                if (infoFromEditForm != null)
+                {
+                    return infoFromEditForm;
+                }
+                else
+                {
+                    infoFromEditForm = "";
 
+                    if (Firstname != "")
+                    { infoFromEditForm = infoFromEditForm + Firstname; }
+
+
+                    if (Lastname != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = Lastname;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + " " + Lastname;
+                        }
+                    }
+
+                    if (Address != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = Address;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\n" + Address;
+                        }
+                    }
+
+
+                    if ((infoFromEditForm != "") && (HomePhone != "" || MobilePhone != "" || WorkPhone != ""))
+                    {
+                        infoFromEditForm = infoFromEditForm + "\r\n";
+                    }
+
+                    if (HomePhone != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = "H: " + HomePhone;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\nH: " + HomePhone;
+                        }
+                    }
+
+                    if (MobilePhone != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = "M: " + MobilePhone;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\nM: " + MobilePhone;
+                        }
+                    }
+
+                    if (WorkPhone != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = "W: " + WorkPhone;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\nW: " + WorkPhone;
+                        }
+                    }
+
+                    if ((infoFromEditForm != "") && (Email != "" || Email2 != "" || Email3 != ""))
+                    {
+                        infoFromEditForm = infoFromEditForm + "\r\n";
+                    }
+
+                    if (Email != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = Email;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\n" + Email;
+                        }
+                    }
+
+                    if (Email2 != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = Email2;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\n" + Email2;
+                        }
+                    }
+
+                    if (Email3 != "")
+                    {
+                        if (infoFromEditForm == "")
+                        {
+                            infoFromEditForm = Email3;
+                        }
+                        else
+                        {
+                            infoFromEditForm = infoFromEditForm + "\r\n" + Email3;
+                        }
+                    }
+
+                    return infoFromEditForm;
+                }
+                }
+            set
+            {
+                EditFormInToString = value;
+            }
+        }
+       
         public string Fax { get; set; }
         public string Homepage { get; set; }
         public string Address2 { get; set; }
