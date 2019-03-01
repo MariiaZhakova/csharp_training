@@ -4,6 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.IO;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 
 namespace WebAddressbookTests
@@ -26,7 +29,13 @@ namespace WebAddressbookTests
 
             return contacts;
         }
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
         {
 
