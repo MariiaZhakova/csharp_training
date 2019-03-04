@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,6 +77,7 @@ namespace WebAddressbookTests
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+        [JsonIgnore]
         public string AllEmails
         {
             get
@@ -136,6 +138,8 @@ namespace WebAddressbookTests
             }
             return email.Replace(" ", "") + "\r\n";
         }
+
+        [JsonIgnore]
         public string EditFormInToString
         {
             get
@@ -264,7 +268,7 @@ namespace WebAddressbookTests
                 }
             set
             {
-                EditFormInToString = value;
+               
             }
         }
        
