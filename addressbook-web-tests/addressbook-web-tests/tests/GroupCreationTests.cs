@@ -8,12 +8,13 @@ using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
 
 namespace WebAddressbookTests
 
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -83,23 +84,35 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAllGroups();
 
             app.Groups.Create(group);
     
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetCountGroup());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAllGroups();
 
-            foreach (GroupData oldGroup in oldGroups)
-            {
-                Assert.AreNotEqual(oldGroup.Id, group.Id);
-            }
+            //foreach (GroupData oldGroup in oldGroups)
+            //{
+            //    Assert.AreNotEqual(oldGroup.Id, group.Id);
+            //}
 
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        
+        [Test]
+        public void TestDBConnectivity()
+        {
+            Console.WriteLine("Test is running");
+            foreach (ContactData contact in GroupData.GetAllGroups()[0].GetContactsByGroup())
+            {
+                Console.WriteLine(contact);
+            }
+
         }
 
     }

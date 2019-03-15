@@ -66,6 +66,8 @@ namespace WebAddressbookTests
                 Email3 = email3
             };
         }
+
+
         public string GetContactInformationFromDetailsForm(int index)
         {
             manager.Navigator.OpenHomePage();
@@ -93,9 +95,26 @@ namespace WebAddressbookTests
 
             return this;
         }
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToContactPage();
+            SelectContactForEdit(contact.Id);
+            FillContactForm(newData);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+
+            return this;
+        }
         public ContactHelper Remove()
         {
             SelectContactForEdit(0);
+            SelectContactForDelete();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+        public ContactHelper Remove(ContactData contact)
+        {
+            SelectContactForEdit(contact.Id);
             SelectContactForDelete();
             manager.Navigator.GoToHomePage();
             return this;
@@ -144,6 +163,11 @@ namespace WebAddressbookTests
                 .FindElement(By.TagName("a")).Click();
         
         }
+        public ContactHelper SelectContactForEdit(string id)
+        {
+            driver.FindElement(By.Id(id)).FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+            return this;
+        }
         public void SelectContactForDetails(int index)
         {
             driver.FindElements(By.Name("entry"))[index]
@@ -156,6 +180,11 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//div[@id='content']/form[2]/input[2])")).Click();
             contactCache = null;
 
+            return this;
+        }
+        public ContactHelper SelectContactForDelete(string contactId)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + contactId + "'])")).Click();
             return this;
         }
         public ContactHelper SubmitContactRemoval()
@@ -215,6 +244,37 @@ namespace WebAddressbookTests
             return Int32.Parse(m.Value);
 
         }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactPage();
+            CleanGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+        public void CleanGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void SelectContact(string id)
+        {
+            driver.FindElement(By.Id(id)).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
 
     }
 }
