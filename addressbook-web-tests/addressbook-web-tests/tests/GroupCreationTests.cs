@@ -1,14 +1,16 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Collections.Generic;
-using NUnit.Framework;
-using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using NUnit.Framework;
 using System.Linq;
+
 
 namespace WebAddressbookTests
 
@@ -107,10 +109,9 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-            Console.WriteLine("Test is running");
             foreach (ContactData contact in GroupData.GetAllGroups()[0].GetContactsByGroup())
             {
-                Console.WriteLine(contact);
+                System.Console.Out.WriteLine(contact);
             }
 
         }
