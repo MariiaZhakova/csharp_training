@@ -136,12 +136,13 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private void CreateNewTempContact()
+        public ContactHelper CreateNewTempContact()
         {
             ContactData contact = new ContactData("Mariia");
             contact.Lastname = "Zhakova";
             contact.Notes = "For temp";
             Create(contact);
+            return this;
         }
 
         public ContactHelper InitContactCreation()

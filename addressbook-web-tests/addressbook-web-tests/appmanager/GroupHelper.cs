@@ -57,12 +57,13 @@ namespace WebAddressbookTests
             return this;
 
         }
-        private void CreateNewTempGroup()
+        public GroupHelper CreateNewTempGroup()
         {
             GroupData group = new GroupData("Temp");
             group.Header = "Group";
             group.Footer = "For Modify";
             Create(group);
+            return this;
         }
 
         public GroupHelper SelectGroup(int index)

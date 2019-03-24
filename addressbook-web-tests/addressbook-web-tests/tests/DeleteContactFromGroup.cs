@@ -14,7 +14,23 @@ namespace WebAddressbookTests
 
         public void TestDeletingContactFromGroup()
         {
+            app.Groups.CheckIfGroupIsPresent();
+            app.Contacts.CheckIfContactIsPresent();
+
             GroupData group = GroupData.GetAllGroups()[0];
+
+            //check that 1 contact is available
+            if (group.GetContactsByGroup().Count < 1) 
+            {
+
+                if (ContactData.GetAllContacts().Count < 1)
+                {
+                    app.Contacts.CreateNewTempContact();
+                }
+
+                app.Contacts.AddContactToGroup(ContactData.GetAllContacts().First(), group);
+            }
+            
             List<ContactData> oldList = group.GetContactsByGroup();
             ContactData contact = oldList[0];
 
